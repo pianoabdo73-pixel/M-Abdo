@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M/abdo - Developer</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ background:#030306;color:white;
+ font-family:Arial,sans-serif;
+ overflow-x:hidden
+}
+
+/* INTRO */
+#intro{
+ position:fixed;inset:0;z-index:1000;
+ background:#020204;overflow:hidden;
+ display:flex;align-items:center;justify-content:center;
+ transition:opacity 1.5s;
+}
+#matrix{position:absolute;inset:0;width:100%;height:100%}
+.smoke{
+ position:absolute;inset:-20%;
+ background:
+ radial-gradient(ellipse at 20% 70%,#7775,transparent 35%),
+ radial-gradient(ellipse at 80% 40%,#5555,transparent 40%),
+ radial-gradient(ellipse at 50% 90%,#a0000044,transparent 45%);
+ filter:blur(35px);
+ animation:smokeMove 5s infinite alternate;
+}
+@keyframes smokeMove{
+ from{transform:translate(-4%,3%) scale(1)}
+ to{transform:translate(5%,-5%) scale(1.2)}
+}
+#lightning{
+ position:absolute;inset:0;width:100%;height:100%;
+ opacity:0;filter:drop-shadow(0 0 12px red);
+}
+#intro.strike #lightning{animation:bolt .8s}
+@keyframes bolt{
+ 0%,100%{opacity:0}
+ 10%,25%,45%{opacity:1}
+ 15%,35%{opacity:.1}
+}
+.intro-name{
+ position:relative;z-index:5;
+ font-size:clamp(65px,13vw,150px);
+ font-weight:900;letter-spacing:-5px;
+ opacity:0;transform:scale(.3);
+ text-shadow:0 0 20px red,0 0 60px red;
+}
+.intro-name span{color:#ff1717}
+#intro.reveal .intro-name{
+ animation:revealName 1.4s forwards;
+}
+@keyframes revealName{
+ 0%{opacity:0;transform:scale(.3)}
+ 60%{opacity:1;transform:scale(1.2)}
+ 100%{opacity:1;transform:scale(1)}
+}
+#intro.exit{opacity:0;pointer-events:none}
+
+/* WEBSITE */
+#website{opacity:0;transition:opacity 2s}
+#website.visible{opacity:1}
+header{
+ position:absolute;top:0;width:100%;height:75px;
+ display:flex;justify-content:space-between;
+ align-items:center;padding:0 5%;
+ background:#030306cc;
+ border-bottom:1px solid #ffffff22;z-index:10
+}
+.logo{font-size:30px;font-weight:bold}
+.logo span{color:red}
+nav a{
+ color:white;text-decoration:none;
+ margin-left:22px;font-size:14px
+}
+nav a:hover{color:red}
+
+.hero{
+ min-height:750px;position:relative;
+ display:flex;align-items:center;
+ justify-content:center;text-align:center;
+ padding:100px 20px 50px;
+ background:url("hellcat.jpg") center center/cover no-repeat;
+ linear-gradient(90deg,#030306bb,#03030655,#03030688),
+ url("hellcat.jpg") center center/cover no-repeat;
+}
+.hero:after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(0deg,#030306,transparent 35%,#03030655);
+ pointer-events:none
+}
+.hero-content{position:relative;z-index:2}
+.small{color:red;letter-spacing:6px}
+.hero h1{
+ font-size:clamp(60px,12vw,120px);
+ margin:20px 0;
+ text-shadow:0 0 25px red;
+}
+.hero h1 span{color:red}
+.hero h2{letter-spacing:4px;font-size:18px}
+.hero p{font-size:19px;line-height:1.8;margin-top:25px}
+.red{color:#ff2020}
+.btn{
+ display:inline-block;margin-top:30px;padding:15px 35px;
+ border:1px solid red;color:white;text-decoration:none;
+ transition:.3s
+}
+.btn:hover{background:red;box-shadow:0 0 25px red}
+
+/* SECTIONS */
+section{padding:75px 6%;text-align:center}
+.title{font-size:38px;margin-bottom:15px}
+.title span{color:red}
+.subtitle{color:#aaa;margin-bottom:35px}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+ gap:20px
+}
+.card{
+ background:linear-gradient(145deg,#17171d,#08080c);
+ border:1px solid #ffffff22;border-radius:10px;
+ padding:30px 20px;transition:.3s
+}
+.card:hover{transform:translateY(-8px);border-color:red}
+.card h3{color:#ff2929;margin-bottom:15px}
+.card p{color:#aaa;line-height:1.7}
+.about-text{
+ max-width:750px;margin:auto;
+ color:#bbb;line-height:2;font-size:17px
+}
+.contact{background:#0a0a0f}
+.contact a{
+ display:inline-block;margin:15px;
+ color:white;text-decoration:none;font-size:18px
+}
+.contact a:hover{color:red}
+footer{
+ text-align:center;padding:25px;color:#888;
+ border-top:1px solid #222
+}
+footer span{color:red}
+
+@media(max-width:650px){
+ header{height:auto;min-height:70px;padding:15px 3%;flex-wrap:wrap}
+ nav{margin-top:12px;width:100%;display:flex;justify-content:center}
+ nav a{margin:0 8px;font-size:12px}
+ .hero{min-height:650px}
+ .hero h2{font-size:13px;letter-spacing:2px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+ <canvas id="matrix"></canvas>
+ <div class="smoke"></div>
+
+ <svg id="lightning" viewBox="0 0 1000 700"
+      preserveAspectRatio="none">
+  <path d="M520 0 L460 180 L530 220 L430 390
+  L510 350 L470 560 L620 310 L540 340
+  L610 150 L550 180 Z"
+  fill="white" stroke="red" stroke-width="5"/>
+  <path d="M520 0 L460 180 L530 220 L430 390
+  L510 350 L470 560"
+  fill="none" stroke="#ff1515" stroke-width="8"/>
+ </svg>
+
+ <div class="intro-name">M/<span>abdo</span></div>
+</div>
+
+<!-- MAIN SITE -->
+<div id="website">
+
+<header>
+ <div class="logo">M/<span>abdo</span></div>
+ <nav>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+ </nav>
+</header>
+
+<div class="hero" id="home">
+ <div class="hero-content">
+  <div class="small">WELCOME TO MY WORLD</div>
+  <h1>M/<span>abdo</span></h1>
+  <h2>MR. ABDULRAHMAN YOUSRY HASSAN</h2>
+  <p>
+   It works with both <span class="red">software</span>
+   and <span class="red">backend</span>,
+   <br>and I have <span class="red">3 languages.</span>
+  </p>
+  <a href="#projects" class="btn">EXPLORE MY WORK</a>
+ </div>
+</div>
+
+<section id="about">
+ <h2 class="title">ABOUT <span>ME</span></h2>
+ <p class="about-text">
+  Welcome to my digital world.
+  I am Abdulrahman Yousry Hassan.
+  I am passionate about programming,
+  software development and building modern
+  digital experiences. Always learning,
+  creating and improving.
+ </p>
+</section>
+
+<section id="skills">
+ <h2 class="title">MY <span>SKILLS</span></h2>
+ <p class="subtitle">Languages and technologies</p>
+ <div class="grid">
+  <div class="card"><h3>Python</h3><p>Programming and software.</p></div>
+  <div class="card"><h3>JavaScript</h3><p>Interactive web experiences.</p></div>
+  <div class="card"><h3>C++</h3><p>Programming fundamentals.</p></div>
+  <div class="card"><h3>Backend</h3><p>Server-side development.</p></div>
+  <div class="card"><h3>Web Development</h3><p>Modern website interfaces.</p></div>
+ </div>
+</section>
+
+<section id="projects">
+ <h2 class="title">MY <span>PROJECTS</span></h2>
+ <p class="subtitle">Ideas become reality through code</p>
+ <div class="grid">
+  <div class="card"><h3>Web Development</h3><p>Website design and development.</p></div>
+  <div class="card"><h3>Software</h3><p>Creative software solutions.</p></div>
+  <div class="card"><h3>Backend Systems</h3><p>Databases and server logic.</p></div>
+ </div>
+</section>
+
+<section class="contact" id="contact">
+ <h2 class="title">CONTACT <span>ME</span></h2>
+ <p class="subtitle">Let's build something great together.</p>
+ <a href="tel:01018943354">☎ 01018943354</a>
+ <a href="https://www.tiktok.com/@abdoooo" target="_blank">
+  TikTok: @abdoooo
+ </a>
+</section>
+
+<footer>
+ © 2026 <span>M/abdo</span> | All Rights Reserved
+</footer>
+</div>
+
+<script>
+/* MATRIX */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+const intro=document.getElementById("intro");
+const website=document.getElementById("website");
+
+let font=17,columns,drops;
+function resize(){
+ canvas.width=innerWidth;
+ canvas.height=innerHeight;
+ columns=Math.floor(canvas.width/font);
+ drops=Array(columns).fill(1);
+}
+resize();
+window.addEventListener("resize",resize);
+
+const chars="01{}[]<>/PYTHONJAVASCRIPT";
+function draw(){
+ ctx.fillStyle="rgba(0,0,0,0.12)";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.font=font+"px monospace";
+
+ for(let i=0;i<drops.length;i++){
+  const char=chars[Math.floor(Math.random()*chars.length)];
+  ctx.fillStyle=Math.random()>.6?"#ff1717":"#e9e9e9";
+  ctx.fillText(char,i*font,drops[i]*font);
+  if(drops[i]*font>canvas.height && Math.random()>.97)
+   drops[i]=0;
+  drops[i]++;
+ }
+}
+const timer=setInterval(draw,35);
+
+/* LIGHTNING REVEAL */
+setTimeout(()=>{
+ intro.classList.add("strike");
+},3500);
+
+setTimeout(()=>{
+ intro.classList.add("reveal");
+},3900);
+
+/* ENTER WEBSITE */
+setTimeout(()=>{
+ intro.classList.add("exit");
+ website.classList.add("visible");
+ clearInterval(timer);
+},6800);
+
+setTimeout(()=>{
+ intro.style.display="none";
+},8400);
+</script>
+
+</body>
+</html>
